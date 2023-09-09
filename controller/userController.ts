@@ -4,13 +4,11 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const validator = require("validator");
 
+// This function generates a jwt token to create a session fro the user
 const createToken = (_id) => {
   return jwt.sign({ _id: _id }, process.env.SECRET, { expiresIn: "3d" });
 };
 
-// connection.then(async (connection) => {
-//   const userRepository = connection.getRepository(users);
-// });
 
 const signup = async function (email: string, password: string) {
   var results = null;
@@ -28,14 +26,15 @@ const signup = async function (email: string, password: string) {
   connection.then(async (connection) => {
     const userRepository = connection.getRepository(users);
     const exists = await userRepository.find({ where: { email: email } });
-    // console.log("EXISTS : ", exists);
     
     if (exists.length >0) {
       throw Error("Email already in use");
     }
   });
 
+  // add some dummy value to the secret/password to secure the password
   const salt = await bcrypt.genSalt(10);
+  // generate an encoded string of the password using the dummy value added
   const hash = await bcrypt.hash(password, salt);
 
   connection.then(async (connection) => {

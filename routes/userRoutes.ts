@@ -3,7 +3,7 @@ import cors = require('cors');
 const {signupUser, loginUser} = require('../controller/userController');
 
 const router = express.Router();
-
+// Using CORS policies
 router.use(cors());
 // login route
 router.post('/login', loginUser);

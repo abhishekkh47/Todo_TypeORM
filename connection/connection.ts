@@ -2,6 +2,7 @@ import { todos } from "../entities/todos";
 import { users } from "../entities/user";
 import { createConnection } from "typeorm";
 
+// Create a Database Connection object
 export const connection = createConnection({
   type: "postgres" ,
   host: "localhost",

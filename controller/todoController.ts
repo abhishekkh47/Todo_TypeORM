@@ -13,32 +13,27 @@ const getTodo = async (req, res) => {
   }
 };
 
-// get a single workout
+// get a single todo
 const getTodoById = async (req, res) => {
   const { id } = req.params;
   var todo = null;
-
-  // if (!mongoose.Types.ObjectId.isValid(id)) {
-  //     return res.status(400).json({ Error: 'No such workout' });
-  // }
   try {
     connection.then(async (connection) => {
       const todosRepository = connection.getRepository(todos);
       todo = await todosRepository.find({ where: { id: id } });
-      res.status(200).json(todo);
-    });
 
-    if (!todo) {
-      res.status(404).json({ Error: "No such todo" });
-    } else {
-      res.status(200).json(todo);
-    }
+      if (!todo) {
+        res.status(404).json({ Error: "No such todo" });
+      } else {
+        res.status(200).json(todo);
+      }
+    });
   } catch (error) {
     res.status(400).json({ Error: error.message });
   }
 };
 
-// create a new workout
+// create a new todo
 const createTodo = async (req, res) => {
   const { title, description, status } = req.body;
 
@@ -63,7 +58,6 @@ const createTodo = async (req, res) => {
   try {
     // we will make use of the 'user' property which we added in the middleware 'requireAuth'
     const user_id = req.user._id;
-    // const workout = await Workout.create({ title, load, reps, user_id });
     connection.then(async (connection) => {
       const todosRepository = connection.getRepository(todos);
       const todo = todosRepository.create({ title, description, status });
@@ -76,18 +70,15 @@ const createTodo = async (req, res) => {
   }
 };
 
-// delete a single workout
+// delete a single todo
 const deleteTodo = async (req, res) => {
   const { id } = req.params;
-  // if (!mongoose.Types.ObjectId.isValid(id)) {
-  //     return res.status(500).json({ Error: 'No such workout' });
-  // }
   try {
     connection.then(async (connection) => {
       const todosRepository = connection.getRepository(todos);
       const todo = await todosRepository.delete(id);
       if (!todo) {
-        res.status(404).json({ Error: "No such workout" });
+        res.status(404).json({ Error: "No such todo" });
       } else {
         res.status(200).json(todo);
       }
@@ -97,21 +88,16 @@ const deleteTodo = async (req, res) => {
   }
 };
 
-// update a single workout
+// update a single todo
 const updateTodo = async (req, res) => {
-//   const { id } = req.params;
-//   const { title, reps, load } = req.body;
-  // if (!mongoose.Types.ObjectId.isValid(id)) {
-  //     return res.status(500).json({ Error: 'No such workout' });
-  // }
   try {
     connection.then(async (connection) => {
-        const todosRepository = connection.getRepository(todos);
-        const todo = await todosRepository.findOne(req.params.id);
+      const todosRepository = connection.getRepository(todos);
+      const todo = await todosRepository.findOne(req.params.id);
       todosRepository.merge(todo, req.body);
       const result = await todosRepository.save(todo);
-    res.status(200).json(todo);
-    })
+      res.status(200).json(todo);
+    });
   } catch (error) {
     res.status(400).json({ Error: error.message });
   }
