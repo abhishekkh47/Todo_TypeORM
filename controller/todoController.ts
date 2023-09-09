@@ -43,10 +43,10 @@ const createTodo = async (req, res) => {
     emptyFields.push("title");
   }
   if (!description) {
-    emptyFields.push("load");
+    emptyFields.push("description");
   }
   if (!status) {
-    emptyFields.push("reps");
+    emptyFields.push("status");
   }
   if (emptyFields.length > 0) {
     return res

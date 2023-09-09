@@ -31,6 +31,6 @@ router.post('/', createTodo);
 router.delete('/:id', deleteTodo);
 
 // UPDATE a new todo
-router.patch('/:id', updateTodo);
+router.put('/:id', updateTodo);
 
 export default router;
