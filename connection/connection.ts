@@ -1,4 +1,5 @@
 import { todos } from "../entities/todos";
+import { users } from "../entities/user";
 import { createConnection } from "typeorm";
 
 export const connection = createConnection({
@@ -8,7 +9,7 @@ export const connection = createConnection({
   username: "postgres",
   password: "rootuser",
   database: "demo",
-  entities: [todos],
+  entities: [todos, users],
   synchronize: true,
   logging: false
 });
