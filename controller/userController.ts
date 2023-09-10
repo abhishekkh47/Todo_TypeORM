@@ -5,7 +5,7 @@ import bcrypt = require("bcrypt");
 import validator = require("validator");
 
 // This function generates a jwt token to create a session fro the user
-const createToken = (_id) => {
+const createToken = (_id:string) => {
   return jwt.sign({ _id: _id }, process.env.SECRET, { expiresIn: "3d" });
 };
 
@@ -113,9 +113,8 @@ const loginUser = async (req: any, res: any) => {
   const { email, password } = req.body;
   try {
     const user = await login(email, password);
-    console.log("return :", user);
 
-    if (user.status == "error") {
+    if (user?.status == "error") {
       return res.status(user.errorCode).json(user);
     }
     const token = createToken(email);

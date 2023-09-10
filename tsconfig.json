@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "types": [],
+        "types": ["jest", "node"],
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true
     }

@@ -1,3 +1,4 @@
+require('dotenv').config();
 const jwt = require("jsonwebtoken");
 import { users } from "../entities/user";
 import { connection } from "../connection/connection";
