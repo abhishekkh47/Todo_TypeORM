@@ -2,11 +2,11 @@ const jwt = require("jsonwebtoken");
 import { users } from "../entities/user";
 import { connection } from "../connection/connection";
 
-const requireAuth = async (req, res, next) => {
+const requireAuth = async (req: any, res: any, next: any) => {
   // verify authentication
   const { authorization } = req.headers;
 
-  // return error if authorization header is not present  
+  // return error if authorization header is not present
   if (!authorization) {
     return res.status(401).json({ error: "Authorization token required" });
   }
@@ -28,4 +28,4 @@ const requireAuth = async (req, res, next) => {
   }
 };
 
-module.exports = requireAuth;
+export default requireAuth

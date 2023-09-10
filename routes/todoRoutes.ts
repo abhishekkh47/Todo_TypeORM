@@ -7,7 +7,7 @@ const {
     deleteTodo,
     updateTodo
 } = require('../controller/todoController');
-const requireAuth = require('../middleware/requireAuth');
+import requireAuth from '../middleware/requireAuth';
 
 const router = express.Router();
 

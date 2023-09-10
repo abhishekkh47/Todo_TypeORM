@@ -1,7 +1,7 @@
 import { connection } from "../connection/connection";
 import { todos } from "../entities/todos";
 
-const getTodo = async (req, res) => {
+const getTodo = async (req: any, res: any) => {
   try {
     connection.then(async (connection) => {
       const todosRepository = connection.getRepository(todos);
@@ -14,7 +14,7 @@ const getTodo = async (req, res) => {
 };
 
 // get a single todo
-const getTodoById = async (req, res) => {
+const getTodoById = async (req: any, res: any) => {
   const { id } = req.params;
   var todo = null;
   try {
@@ -34,7 +34,7 @@ const getTodoById = async (req, res) => {
 };
 
 // create a new todo
-const createTodo = async (req, res) => {
+const createTodo = async (req: any, res: any) => {
   const { title, description, status } = req.body;
 
   let emptyFields = [];
@@ -71,7 +71,7 @@ const createTodo = async (req, res) => {
 };
 
 // delete a single todo
-const deleteTodo = async (req, res) => {
+const deleteTodo = async (req: any, res: any) => {
   const { id } = req.params;
   try {
     connection.then(async (connection) => {
@@ -89,7 +89,7 @@ const deleteTodo = async (req, res) => {
 };
 
 // update a single todo
-const updateTodo = async (req, res) => {
+const updateTodo = async (req: any, res: any) => {
   try {
     connection.then(async (connection) => {
       const todosRepository = connection.getRepository(todos);

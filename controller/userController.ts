@@ -1,8 +1,8 @@
 import { users } from "../entities/user";
 import { connection } from "../connection/connection";
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
-const validator = require("validator");
+import jwt = require("jsonwebtoken");
+import bcrypt = require("bcrypt");
+import validator = require("validator");
 
 // This function generates a jwt token to create a session fro the user
 const createToken = (_id) => {
@@ -14,28 +14,25 @@ const signup = async function (email: string, password: string) {
     var results = null;
     // validation
     if (!email || !password) {
-      // throw errorMsg("All fields are required");
       return {
         status: "error",
         errorCode: 400,
         errorMsg: "All fields are required",
       };
     }
-    if (!validator.isEmail(email)) {
+    if (!validator.default.isEmail(email)) {
       return {
         status: "error",
         errorCode: 400,
         errorMsg: "Email is not valid",
       };
-      // throw errorMsg("Email is not valid");
     }
-    if (!validator.isStrongPassword(password)) {
+    if (!validator.default.isStrongPassword(password)) {
       return {
         status: "error",
         errorCode: 400,
         errorMsg: "Password not strong enough",
       };
-      // throw errorMsg("Password not strong enough");
     }
 
     connection.then(async (connection) => {
@@ -48,7 +45,6 @@ const signup = async function (email: string, password: string) {
           errorCode: 400,
           errorMsg: "Email already in use",
         };
-        // throw errorMsg("Email already in use");
       }
     });
 
@@ -113,7 +109,7 @@ const login = async function (email: string, password: string) {
 };
 
 // login user
-const loginUser = async (req, res) => {
+const loginUser = async (req: any, res: any) => {
   const { email, password } = req.body;
   try {
     const user = await login(email, password);
@@ -131,11 +127,11 @@ const loginUser = async (req, res) => {
 };
 
 // signup user
-const signupUser = async (req, res) => {
+const signupUser = async (req: any, res: any) => {
   const { email, password } = req.body;
   try {
     const user = await signup(email, password);
-    if (user.status == "error") {
+    if (user?.status == "error") {
       return res.status(user.errorCode).json(user);
     }
     const token = createToken(email);
