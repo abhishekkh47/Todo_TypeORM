@@ -9,7 +9,9 @@ const requireAuth = async (req: any, res: any, next: any) => {
 
   // return error if authorization header is not present
   if (!authorization) {
-    return res.status(401).json({ error: "Authorization token required" });
+    return res.status(404).json({ error: "Bad Request - Authorization token required" });
+  } else if ((authorization.split(" ")[0] != 'bearer') && (authorization.split(" ")[0] != 'Bearer')){
+    return res.status(404).json({ error: "Bad Request - Authorization token invalid" });
   }
 
   const token = authorization.split(" ")[1];
@@ -25,7 +27,7 @@ const requireAuth = async (req: any, res: any, next: any) => {
     });
   } catch (error) {
     console.log(error);
-    res.status(401).json({ error: "Request is not authorized" });
+    res.status(401).json({ error: "Unauthorized : Invalid token" });
   }
 };
 
